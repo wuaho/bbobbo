@@ -1,1 +1,0 @@
-La carpeta app define todas las rutas de la aplicación
