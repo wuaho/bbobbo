@@ -2,6 +2,7 @@
 
 import NoButton from "@/components/buttons/NoButton";
 import YesButton from "@/components/buttons/YesButton";
+import Image from "next/image";
 
 // Definimos los tipos de props (propiedades) que espera este componente
 interface QuestionViewProps {
@@ -17,6 +18,16 @@ export default function QuestionView({ onYesClick }: QuestionViewProps) {
           (¿Quieres darme un besito? 🐮)
         </span>
       </h1>
+      <div className="absolute top-0 left-0 opacity-0 pointer-events-none">
+        <Image
+          src="/cute-cat.gif"
+          alt="A cute cat confirming a question"
+          width={256}
+          height={256}
+          priority
+          unoptimized
+        />
+      </div>
 
       <div className="flex gap-8 mt-12 z-10">
         <YesButton onClick={onYesClick}> 웅! (Sip!) 🐷</YesButton>

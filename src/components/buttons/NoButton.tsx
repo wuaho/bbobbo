@@ -35,8 +35,22 @@ export default function NoButton({ children, onClick }: NoButtonProps) {
       Math.min(prevLevel + 1, angryEmojis.length - 1)
     );
 
-    const newX = Math.floor(Math.random() * 800) - 400;
-    const newY = Math.floor(Math.random() * 500) - 250;
+    let minX = -250;
+    let maxX = 50;
+
+    const minY = -400;
+    const maxY = 300;
+
+    const rangeX = maxX - minX; // Rango Total: 200 - (-600) = 800
+    const rangeY = maxY - minY;
+
+    // if (innerWidth >= 768) {
+    //   maxRangeX = 400;
+    //   maxRangeY = 250;
+    // }
+
+    const newX = Math.floor(Math.random() * rangeX) + minX;
+    const newY = Math.floor(Math.random() * rangeY) + minY;
 
     setNoButtonPosition({ x: newX, y: newY });
   }, [isMoved]);

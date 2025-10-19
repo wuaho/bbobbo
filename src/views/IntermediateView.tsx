@@ -1,4 +1,5 @@
-// src/components/KissInteraction/IntermediateView.tsx
+"use client";
+import Image from "next/image";
 
 interface IntermediateViewProps {
   onYesClick: () => void;
@@ -17,10 +18,13 @@ export default function IntermediateView({
       </h1>
 
       {}
-      <img
+      <Image
         src="/cute-cat.gif"
         alt="A cute cat confirming a question"
+        width={256}
+        height={256}
         className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full shadow-xl mb-12 border-4 border-pink-300"
+        unoptimized
       />
 
       <button
