@@ -1,103 +1,100 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useCallback } from "react";
+
+// Se define el ancho y alto del botón "No" para que el fantasma ocupe ese mismo espacio
+const BUTTON_CLASSES =
+  "bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-100 ease-out text-xl md:text-2xl";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
+  const [showMessage, setShowMessage] = useState(false);
+  const [isMoved, setIsMoved] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+  // Función para mover el botón "No"
+  const moveNoButton = useCallback(() => {
+    // 1. Marca que el botón ya se movió (y ahora es Absoluto)
+    if (!isMoved) {
+      setIsMoved(true);
+    }
+
+    // 2. Calcula la nueva posición aleatoria (como antes)
+    const maxX = window.innerWidth - 150;
+    const maxY = window.innerHeight - 100;
+
+    const newX = Math.floor(Math.random() * maxX);
+    const newY = Math.floor(Math.random() * maxY);
+
+    setNoButtonPosition({ x: newX, y: newY });
+  }, [isMoved]);
+
+  const handleYesClick = () => {
+    setShowMessage(true);
+  };
+
+  // --- Renderizado del mensaje final (sin cambios) ---
+  if (showMessage) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-pink-100 text-pink-700 text-4xl md:text-6xl font-bold text-center p-4">
+        <p>¡Saranghaeyo! (사랑해요!) ❤️</p>
+        <p className="mt-4 text-2xl md:text-3xl">
+          ¡Sabía que dirías que sí! 🥰
+        </p>
+        <p className="mt-8">
+          <span className="text-sm block">
+            Para resetear, recarga la página.
+          </span>
+        </p>
+      </div>
+    );
+  }
+
+  // --- Renderizado de los botones ---
+  return (
+    <div className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-pink-50 to-red-100 p-4 overflow-hidden">
+      <h1 className="text-4xl md:text-5xl font-extrabold text-pink-600 mb-8 text-center drop-shadow-lg">
+        뽀뽀해줄래?
+        <span className="block text-xl md:text-2xl font-medium mt-2 text-pink-500">
+          (¿Quieres darme un beso?)
+        </span>
+      </h1>
+
+      {/* Contenedor flex: mantiene ambos espacios fijos */}
+      <div className="flex gap-8 mt-12 z-10">
+        {/* Botón "Sí" (Siempre estable) */}
+        <button
+          onClick={handleYesClick}
+          className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105 duration-300 ease-in-out text-xl md:text-2xl"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          네! (Sí!)
+        </button>
+
+        {/* 💡 CONTENEDOR FANTASMA: Se muestra si el botón "No" se ha movido */}
+        {isMoved && (
+          <div className={`invisible ${BUTTON_CLASSES}`}>
+            {/* Texto invisible que ocupa el mismo espacio que el botón real */}
+            아니요 (No)
+          </div>
+        )}
+
+        {/* Botón "No" */}
+        <button
+          onClick={moveNoButton}
+          onMouseEnter={moveNoButton}
+          // Clases Condicionales: Es relativo al inicio, absoluto al moverse.
+          className={`${BUTTON_CLASSES} ${isMoved ? "absolute" : "relative"}`}
+          // Estilos Condicionales: Solo aplica coordenadas si está movido (es decir, es absoluto)
+          style={
+            isMoved ? { left: noButtonPosition.x, top: noButtonPosition.y } : {}
+          }
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          아니요 (No)
+        </button>
+      </div>
+
+      <p className="absolute bottom-4 text-gray-500 text-sm">
+        Intenta hacer clic en "아니요" si puedes... 😉
+      </p>
     </div>
   );
 }

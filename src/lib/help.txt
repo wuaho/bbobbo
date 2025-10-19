@@ -1,0 +1,1 @@
+La carpeta lib contiene funciones de ayuda (utilities), logica de negocio o data fetching
