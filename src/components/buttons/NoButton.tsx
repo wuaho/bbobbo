@@ -38,16 +38,18 @@ export default function NoButton({ children, onClick }: NoButtonProps) {
     let minX = -250;
     let maxX = 50;
 
-    const minY = -400;
-    const maxY = 300;
+    let minY = -400;
+    let maxY = 300;
 
-    const rangeX = maxX - minX; // Rango Total: 200 - (-600) = 800
+    if (window.innerWidth >= 768) {
+      minX = -600;
+      maxX = 450;
+      minY = -250;
+      maxY = 250;
+    }
+
+    const rangeX = maxX - minX;
     const rangeY = maxY - minY;
-
-    // if (innerWidth >= 768) {
-    //   maxRangeX = 400;
-    //   maxRangeY = 250;
-    // }
 
     const newX = Math.floor(Math.random() * rangeX) + minX;
     const newY = Math.floor(Math.random() * rangeY) + minY;
